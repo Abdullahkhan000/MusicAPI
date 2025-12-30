@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ composer.name }}</title>
+    <style>
+        body {
+            background: #121212;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.03);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 3em;
+            color: #1DB954;
+        }
+
+        .genre {
+            color: #1DB954;
+            font-size: 1.1em;
+            margin-top: 8px;
+        }
+
+        .stats {
+            margin-top: 20px;
+            display: flex;
+            gap: 30px;
+            font-size: 16px;
+            color: #b3b3b3;
+        }
+
+        .about {
+            margin-top: 25px;
+            line-height: 1.8;
+            color: #ddd;
+        }
+
+        .btns {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #1DB954, #1ed760);
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .btn.secondary {
+            background: #2c2c2c;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        .btn.secondary:hover {
+            background: #1DB954;
+            border-color: #1DB954;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="{{ composer.pic }}" alt="{{ composer.name }}">
+
+        <div>
+            <h1>{{ composer.name }}</h1>
+            <div class="genre">{{ composer.genre|title }}</div>
+
+            <div class="stats">
+                <div>🎵 Albums: {{ composer.total_album }}</div>
+                <div>🎧 Tracks: {{ composer.single_tracks }}</div>
+                <div>📅 Joined: {{ composer.join_date }}</div>
+            </div>
+
+            <div class="about">
+                {{ composer.about|linebreaks }}
+            </div>
+
+            <div class="btns">
+                {% if composer.recent_release %}
+                <a class="btn" href="{{ composer.recent_release }}" target="_blank">
+                    🎵 Recent Release
+                </a>
+                {% endif %}
+
+                <a class="btn secondary" href="{% url 'composer-list-ui' %}">
+                    ← Back
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
